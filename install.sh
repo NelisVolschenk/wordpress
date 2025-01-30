@@ -31,7 +31,8 @@ TREFIKHASH=$(echo -n "$TRAEFIKPASS" | sha1sum | awk '{print $1}')
 WPADMINPASS=$(password)
 sed --in-place "s/{DBPASSWORD}/$DBPASS()/g" .env
 sed --in-place "s/{DBADMINPASSWORD}/$DBADMINPASS/g" .env
-sed --in-place "s/{TRAEFIKPASSWORD}/$TREFIKHASH/g" .env
+sed --in-place "s/{TRAEFIKPASSWORD}/$TRAEFIKPASS/g" .env
+sed --in-place "s/{TRAEFIKHASH}/$TREFIKHASH/g" .env
 sed --in-place "s/{WPADMINPASSWORD}/$WPADMINPASS/g" .env
 echo "Your traefik password is $TRAEFIKPASS"
 echo "Your admin password is $WPADMINPASS"
