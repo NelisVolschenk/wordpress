@@ -37,4 +37,8 @@ echo "Your traefik password is $TRAEFIKPASS"
 echo "Your admin password is $WPADMINPASS"
 echo "Please go change the smtp details in the .env file"
 
+docker network create traefik-network
+docker network create wordpress-network
+
+
 
