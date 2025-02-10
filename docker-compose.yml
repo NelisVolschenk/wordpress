@@ -225,7 +225,7 @@ services:
     environment:
       - CLOUDFLARE_API_TOKEN=${CLOUDFLARE_API_TOKEN}
       # Your Cloudflare API token
-      - DOMAINS=${WORDPRESS_HOSTNAME}
+      - DOMAINS=${WORDPRESS_ROOT_DOMAIN},${TRAEFIK_HOSTNAME}
       # Your domains (separated by commas)
       - PROXIED=false
       # Tell Cloudflare to cache webpages and hide your IP (optional)
