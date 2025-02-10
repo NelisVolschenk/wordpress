@@ -4,19 +4,11 @@ networks:
   traefik-network:
     external: true
 
-volumes:
-  mariadb-data:
-  wordpress-data:
-  wordpress-mariadb-backup:
-  wordpress-data-backups:
-  wordpress-database-backups:
-  traefik-certificates:
-
 services:
   mariadb:
     image: ${WORDPRESS_MARIADB_IMAGE_TAG}
     volumes:
-      - mariadb-data:/var/lib/mysql
+      - ./data/mariadb-data:/var/lib/mysql
     environment:
       MARIADB_DATABASE: ${WORDPRESS_DB_NAME}
       MARIADB_USER: ${WORDPRESS_DB_USER}
@@ -35,7 +27,7 @@ services:
   wordpress:
     image: ${WORDPRESS_IMAGE_TAG}
     volumes:
-      - wordpress-data:${DATA_PATH}
+      - ./data/wordpress-data:${DATA_PATH}
     environment:
       WORDPRESS_DATABASE_HOST: mariadb
       WORDPRESS_DATABASE_PORT_NUMBER: 3306
@@ -131,7 +123,7 @@ services:
       - "--global.sendanonymoususage=false"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - traefik-certificates:/etc/traefik/acme
+      - ./data/traefik-certificates:/etc/traefik/acme
     networks:
       - traefik-network
     ports:
@@ -186,10 +178,10 @@ services:
         find $DATA_BACKUPS_PATH -type f -mtime +$DATA_BACKUP_PRUNE_DAYS | xargs rm -f;
         sleep $BACKUP_INTERVAL; done'
     volumes:
-      - wordpress-mariadb-backup:/var/lib/mysql
-      - wordpress-data:${DATA_PATH}
-      - wordpress-data-backups:${DATA_BACKUPS_PATH}
-      - wordpress-database-backups:${MARIADB_BACKUPS_PATH}
+      - ./data/wordpress-mariadb-backup:/var/lib/mysql
+      - ./data/wordpress-data:${DATA_PATH}
+      - ./data/wordpress-data-backups:${DATA_BACKUPS_PATH}
+      - ./data/wordpress-database-backups:${MARIADB_BACKUPS_PATH}
     environment:
       WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
