@@ -22,6 +22,8 @@ read -p "What is your Admin username " ADMIN_USERNAME
 sed --in-place "s/{ADMINUSERNAME}/$ADMIN_USERNAME/g" .env
 read -p "What is your Admin email " ADMIN_EMAIL
 sed --in-place "s/{ADMINEMAIL}/$ADMIN_EMAIL/g" .env
+read -p "What is your Cloudflare api token " CLOUDFLARE_TOKEN
+sed --in-place "s/{CLOUDFLARE_API_TOKEN}/$CLOUDFLARE_TOKEN/g" .env
 
 echo "Randomizing Passwords"
 DBPASS=$(password)
